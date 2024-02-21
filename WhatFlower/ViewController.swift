@@ -6,18 +6,23 @@
 //
 
 import UIKit
+import CoreML
+import Vision
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     @IBOutlet weak var imageView: UIImageView!
     
-    let picker = UIImagePickerController()
+    private let picker = UIImagePickerController()
+    
+    private var request: VNCoreMLRequest?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         picker.delegate = self
     }
-
+    
     @IBAction func cameraButtonPressed(_ sender: UIBarButtonItem) {
         let actionController = UIAlertController(title: "How do you want to choose your photo?", message: nil, preferredStyle: .actionSheet)
         
@@ -39,15 +44,50 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        print("finished")
-        let image = info[.originalImage] as? UIImage
+        guard let image = info[.originalImage] as? UIImage else {
+            fatalError("Failed to get image picked by user.")
+        }
+        
+        guard let ciImage = CIImage(image: image) else {
+            fatalError("Failed to convert UIImage to CIImage")
+        }
+
+        guard let result = detect(flowerImage: ciImage) else {
+            fatalError()
+        }
+        
         imageView.image = image
-        picker.dismiss(animated: true)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print("cancelled")
+        self.navigationItem.title = "\(result.identifier)"
         picker.dismiss(animated: true)
     }
 }
 
+func detect(flowerImage: CIImage) -> VNClassificationObservation?{
+    
+    var firstResult: VNClassificationObservation?
+    guard let model = try? VNCoreMLModel(for: FlowerClassifier(configuration: .init()).model) else {
+        fatalError("Failed loading MLModel")
+    }
+    
+    let request = VNCoreMLRequest(model: model) { request, error in
+        guard let results = request.results as? [VNClassificationObservation] else {
+            fatalError()
+        }
+        firstResult = results.first!
+    }
+    
+    let handler = VNImageRequestHandler(ciImage: flowerImage)
+    
+    do {
+        try handler.perform([request])
+        return firstResult ?? nil
+    } catch {
+        print("Error performing VNCoreMLRequest: \(error)")
+    }
+    return nil
+}
+
+func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    print("cancelled")
+    picker.dismiss(animated: true)
+}
