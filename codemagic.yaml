@@ -19,6 +19,8 @@ workflows:
       email:
         recipients:
           - amourakora2001@gmail.com
+        notify:
+          success: false
     triggering:
       events:
         - push
