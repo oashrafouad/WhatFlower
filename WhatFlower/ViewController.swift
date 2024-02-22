@@ -17,7 +17,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     private var request: VNCoreMLRequest?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         picker.delegate = self
@@ -44,20 +43,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[.originalImage] as? UIImage else {
+        guard let userPickedImage = info[.originalImage] as? UIImage else {
             fatalError("Failed to get image picked by user.")
         }
         
-        guard let ciImage = CIImage(image: image) else {
+        guard let convertedCIImage = CIImage(image: userPickedImage) else {
             fatalError("Failed to convert UIImage to CIImage")
         }
 
-        guard let result = detect(flowerImage: ciImage) else {
+        guard let result = detect(flowerImage: convertedCIImage) else {
             fatalError()
         }
         
-        imageView.image = image
-        self.navigationItem.title = "\(result.identifier)"
+        imageView.image = userPickedImage
+        self.navigationItem.title = "\(result.identifier.capitalized)"
         picker.dismiss(animated: true)
     }
 }
