@@ -14,6 +14,8 @@
 		078649352B7F9916001F7670 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 078649332B7F9916001F7670 /* Main.storyboard */; };
 		078649372B7F9918001F7670 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 078649362B7F9918001F7670 /* Assets.xcassets */; };
 		0786493A2B7F9918001F7670 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 078649382B7F9918001F7670 /* LaunchScreen.storyboard */; };
+		07B111282B87F58700968E69 /* FlowerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B111272B87F58700968E69 /* FlowerData.swift */; };
+		07B1112D2B88089200968E69 /* FlowerBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B1112C2B88089200968E69 /* FlowerBrain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		078649362B7F9918001F7670 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		078649392B7F9918001F7670 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0786493B2B7F9918001F7670 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		07B111272B87F58700968E69 /* FlowerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowerData.swift; sourceTree = "<group>"; };
+		07B1112C2B88089200968E69 /* FlowerBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowerBrain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,14 +64,40 @@
 			children = (
 				0786492D2B7F9916001F7670 /* AppDelegate.swift */,
 				0786492F2B7F9916001F7670 /* SceneDelegate.swift */,
-				078649312B7F9916001F7670 /* ViewController.swift */,
-				078649332B7F9916001F7670 /* Main.storyboard */,
+				07B111292B88085600968E69 /* Controllers */,
+				07B1112A2B88085D00968E69 /* Models */,
+				07B1112B2B88086500968E69 /* Views */,
 				078649362B7F9918001F7670 /* Assets.xcassets */,
 				078649382B7F9918001F7670 /* LaunchScreen.storyboard */,
 				0786493B2B7F9918001F7670 /* Info.plist */,
 				0785CBCB2B85870A0018501B /* FlowerClassifier.mlmodel */,
 			);
 			path = WhatFlower;
+			sourceTree = "<group>";
+		};
+		07B111292B88085600968E69 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				078649312B7F9916001F7670 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		07B1112A2B88085D00968E69 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				07B111272B87F58700968E69 /* FlowerData.swift */,
+				07B1112C2B88089200968E69 /* FlowerBrain.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		07B1112B2B88086500968E69 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				078649332B7F9916001F7670 /* Main.storyboard */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,10 +171,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07B111282B87F58700968E69 /* FlowerData.swift in Sources */,
 				0785CBCC2B85870A0018501B /* FlowerClassifier.mlmodel in Sources */,
 				078649322B7F9916001F7670 /* ViewController.swift in Sources */,
 				0786492E2B7F9916001F7670 /* AppDelegate.swift in Sources */,
 				078649302B7F9916001F7670 /* SceneDelegate.swift in Sources */,
+				07B1112D2B88089200968E69 /* FlowerBrain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

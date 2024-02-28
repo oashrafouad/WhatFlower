@@ -17,17 +17,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pq7-v8-XuB">
+                                <rect key="frame" x="20" y="464" width="335" height="310"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="310" id="2cq-b1-eqA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FKs-ZX-Ziw">
-                                <rect key="frame" x="0.0" y="94" width="375" height="684"/>
+                                <rect key="frame" x="0.0" y="94" width="375" height="350"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="350" id="hm9-Bu-Fgd"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="FKs-ZX-Ziw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="53M-g8-6Tg"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FKs-ZX-Ziw" secondAttribute="trailing" id="c7V-D9-Jfd"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="FKs-ZX-Ziw" secondAttribute="bottom" id="k0P-A7-ZdT"/>
-                            <constraint firstItem="FKs-ZX-Ziw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="oJG-Ex-kKq"/>
+                            <constraint firstItem="FKs-ZX-Ziw" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="IIL-wp-JVK"/>
+                            <constraint firstItem="Pq7-v8-XuB" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" constant="-20" id="YQm-xi-MOd"/>
+                            <constraint firstItem="Pq7-v8-XuB" firstAttribute="top" secondItem="FKs-ZX-Ziw" secondAttribute="bottom" constant="20" id="fU1-gs-Tt1"/>
+                            <constraint firstItem="Pq7-v8-XuB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="p56-P8-rMs"/>
+                            <constraint firstItem="FKs-ZX-Ziw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tYb-e8-cXm"/>
+                            <constraint firstItem="FKs-ZX-Ziw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="zt6-uf-DDF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3H0-mI-YRO">
@@ -39,6 +53,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="FKs-ZX-Ziw" id="hQu-Mh-1VZ"/>
+                        <outlet property="textLabel" destination="Pq7-v8-XuB" id="2Y2-TL-cWJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
