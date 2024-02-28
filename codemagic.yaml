@@ -1,5 +1,7 @@
 workflows:
   ios:
+    environment:
+      xcode: edge
     scripts:
       - name: "Build iOS"
         script: |
@@ -13,6 +15,7 @@ workflows:
           mv WhatFlower.app Payload
           zip -r Payload.zip Payload
           mv Payload.zip WhatFlower.ipa
+
     artifacts:
       - /Users/builder/clone/archive.xcarchive/Products/Applications/*.ipa
     publishing:
