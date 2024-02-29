@@ -6,10 +6,9 @@
 //
 
 import UIKit
-import CoreML
 import Vision
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, URLSessionTaskDelegate, URLSessionDataDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -18,15 +17,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     private var request: VNCoreMLRequest?
     
-    private var session: URLSession?
+    var session: URLSession?
     
     var flowerBrain = FlowerBrain()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         picker.delegate = self
-        session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
-        
+        session = URLSession(configuration: .default)
     }
     
     @IBAction func cameraButtonPressed(_ sender: UIBarButtonItem) {
@@ -64,22 +62,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         flowerName = "Flower"
         
-//        let flowerInfo = flowerBrain.getFlowerInfo(flowerName: flowerName)
-//        print(flowerInfo)
-//        // loop until flowerInfo is not nil
-//        while flowerInfo == nil {
-//            print("waiting for flowerInfo")
-//            if flowerInfo != nil {
-//                print("not nil")
-//            }
-//        }
         if let flowerInfo = flowerBrain.getFlowerInfo(flowerName: flowerName) {
-            //        print(flowerInfo)
-            print("3")
+            print("4")
             
-            // get image from url
+//                let alertController = UIAlertController(title: "Error", message: flowerInfo.error, preferredStyle: .alert)
+//                let action = UIAlertAction(title: "OK", style: .default)
+//                alertController.addAction(action)
+//                present(alertController,animated: true)
+//                picker.dismiss(animated: true)
+            
+            // Get image from url
             let url = URL(string: flowerInfo.query.pages[0].thumbnail.source)
-//            let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
             let task = session!.dataTask(with: url!) { data, response, error in
                 if let safeData = data {
                     DispatchQueue.main.async {
@@ -91,29 +84,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.textLabel.text = flowerInfo.query.pages[0].extract
             self.navigationItem.title = "\(flowerName)"
         } else {
+            print("nil")
             imageView.image = userPickedImage
             self.textLabel.text = "No info about this flower was found."
         }
         textLabel.isHidden = false
         picker.dismiss(animated: true)
     }
-    
-//    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-//        print("completed")
-//    }
-//    func urlSession(_ session: URLSession, didCreateTask task: URLSessionTask) {
-//        print("created")
-//    }
-//    func urlSession(_ session: URLSession, task: URLSessionTask, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-//        print("received")
-//    }
-//    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-//        print("finished")
-//    }
 }
 
 func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
     picker.dismiss(animated: true)
 }
-
-

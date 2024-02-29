@@ -23,4 +23,3 @@ struct Page: Codable {
 struct Thumbnail: Codable {
     let source: String
 }
-

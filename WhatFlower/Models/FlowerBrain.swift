@@ -5,9 +5,8 @@
 //  Created by Omar Ashraf on 23/02/2024.
 //
 
-import CoreML
+import UIKit
 import Vision
-import CoreImage
 
 struct FlowerBrain {
     
@@ -43,14 +42,13 @@ struct FlowerBrain {
         print(flowerName)
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url!) { data, response, error in
-            print("1")
+            if error != nil {
+                print(error!.localizedDescription)
+            }
+            
             if let safeData = data {
                 do {
-                    //                    print(String(data: safeData, encoding: .utf8)!)
                     flowerInfo = try JSONDecoder().decode(FlowerData.self, from: safeData)
-                    //                    flowerInfo = flowerData.query.pages[0].extract
-                    //                    print(flowerInfo)
-                    
                 } catch {
                     print("Error decoding JSON response: \(error)")
                 }
@@ -62,10 +60,10 @@ struct FlowerBrain {
         }
         task.resume()
         
-        sleep(2) // task can finish AFTER function return, so this fixes that TODO: replace that with better way
-        //        print(flowerInfo)
+        while (!task.progress.isFinished) { /* empty loop to block executing further code before we're sure task is finished */ }
+        Thread.sleep(forTimeInterval: 0.01) // for some reason there is a tiny delay between when the while loop finishing and the task completion handler executing, that messes the code order and function returns with nil, so I added a small delay to sync things up
+        print("3")
         return flowerInfo
-        
     }
     
     
