@@ -11,7 +11,8 @@ import Vision
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var textLabel: UILabel!
+    @IBOutlet weak var flowerDescriptionTextLabel: UILabel!
+    @IBOutlet weak var placeHolderTextLabel: UILabel!
     
     private let picker = UIImagePickerController()
     var session: URLSession?
@@ -50,7 +51,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             fatalError("Failed to convert UIImage to CIImage")
         }
         
-        guard var flowerName = flowerBrain.detectFlowerName(flowerImage: convertedCIImage) else {
+        guard let flowerName = flowerBrain.detectFlowerName(flowerImage: convertedCIImage) else {
             fatalError()
         }
         
@@ -65,14 +66,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 }
             }
             task.resume()
-            self.textLabel.text = flowerInfo.query.pages[0].extract
+            self.flowerDescriptionTextLabel.text = flowerInfo.query.pages[0].extract
             self.navigationItem.title = "\(flowerName)"
         } else {
             imageView.image = userPickedImage
-            self.textLabel.text = "No info about this flower was found."
+            self.flowerDescriptionTextLabel.text = "No info about this flower was found."
             self.navigationItem.title = "\(flowerName)"
         }
-        textLabel.isHidden = false
+        placeHolderTextLabel.isHidden = true
+        flowerDescriptionTextLabel.isHidden = false
+        imageView.isHidden = false
         picker.dismiss(animated: true)
     }
 }
