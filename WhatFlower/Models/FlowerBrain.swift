@@ -39,7 +39,6 @@ struct FlowerBrain {
         var flowerInfo: FlowerData? = nil
         
         let url = URL(string: "https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages&exsentences=10&pithumbsize=500&titles=\(flowerName)&explaintext=1&formatversion=2&format=json")
-        print(flowerName)
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url!) { data, response, error in
             if error != nil {
@@ -52,19 +51,13 @@ struct FlowerBrain {
                 } catch {
                     print("Error decoding JSON response: \(error)")
                 }
-                print("2")
-            }
-            else {
-                print("Error")
             }
         }
         task.resume()
         
         while (!task.progress.isFinished) { /* empty loop to block executing further code before we're sure task is finished */ }
         Thread.sleep(forTimeInterval: 0.01) // for some reason there is a tiny delay between when the while loop finishing and the task completion handler executing, that messes the code order and function returns with nil, so I added a small delay to sync things up
-        print("3")
+        
         return flowerInfo
     }
-    
-    
 }

@@ -11,14 +11,10 @@ import Vision
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var textLabel: UILabel!
+    
     private let picker = UIImagePickerController()
-    
-    private var request: VNCoreMLRequest?
-    
     var session: URLSession?
-    
     var flowerBrain = FlowerBrain()
     
     override func viewDidLoad() {
@@ -29,7 +25,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func cameraButtonPressed(_ sender: UIBarButtonItem) {
         let actionController = UIAlertController(title: "How do you want to choose your photo?", message: nil, preferredStyle: .actionSheet)
-        
         let cameraAction = UIAlertAction(title: "Camera", style: .default) { action in
             self.picker.sourceType = .camera
             self.present(self.picker, animated: true)
@@ -43,7 +38,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         actionController.addAction(cameraAction)
         actionController.addAction(photoLibraryAction)
         actionController.addAction(cancelAction)
-        
         present(actionController, animated: true)
     }
     
@@ -60,17 +54,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             fatalError()
         }
         
-        flowerName = "Flower"
-        
         if let flowerInfo = flowerBrain.getFlowerInfo(flowerName: flowerName) {
-            print("4")
-            
-//                let alertController = UIAlertController(title: "Error", message: flowerInfo.error, preferredStyle: .alert)
-//                let action = UIAlertAction(title: "OK", style: .default)
-//                alertController.addAction(action)
-//                present(alertController,animated: true)
-//                picker.dismiss(animated: true)
-            
             // Get image from url
             let url = URL(string: flowerInfo.query.pages[0].thumbnail.source)
             let task = session!.dataTask(with: url!) { data, response, error in
@@ -84,9 +68,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.textLabel.text = flowerInfo.query.pages[0].extract
             self.navigationItem.title = "\(flowerName)"
         } else {
-            print("nil")
             imageView.image = userPickedImage
             self.textLabel.text = "No info about this flower was found."
+            self.navigationItem.title = "\(flowerName)"
         }
         textLabel.isHidden = false
         picker.dismiss(animated: true)
